@@ -1,0 +1,60 @@
+#!/usr/bin/env php
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Administrator
+ * Date: 2019/3/8
+ * Time: 14:41
+ */
+
+
+global $argv;
+
+
+function commandParser()
+{
+    global $argv;
+    $command = '';
+    $options = array();
+    if (isset($argv[1])) {
+        $command = $argv[1];
+    }
+    foreach ($argv as $item) {
+        if (substr($item, 0, 2) === '--') {
+            $temp = trim($item, "--");
+            $temp = explode("-", $temp);
+            $key = array_shift($temp);
+            $options[$key] = array_shift($temp) ?: '';
+        }
+    }
+    return array($command, $options);
+}
+
+echo <<<DEFAULTHELP
+\n欢迎使用为API而生的\e[32m easySwoole\e[0m 框架 当前版本: \e[34m2.x\e[0m
+
+\e[33m使用:\e[0m
+  easyswoole [操作] [选项]
+
+\e[33m操作:\e[0m
+\e[32m  install \e[0m      初始化easySwoole
+\e[32m  start \e[0m        启动服务
+\e[32m  stop \e[0m         停止服务
+\e[32m  reload \e[0m       重载服务
+\e[32m  restart \e[0m      重启服务
+
+\e[32m  help \e[0m         查看命令的帮助信息\n
+\e[31m有关某个操作的详细信息 请使用\e[0m help \e[31m命令查看 \e[0m
+\e[31m如查看\e[0m start \e[31m操作的详细信息 请输入\e[0m easyswoole help --start\n\n
+DEFAULTHELP;
+
+$result = commandParser();
+
+print_r($result);
+
+
+echo "进程开始";
+while (true)  {
+
+}
+echo "======";
